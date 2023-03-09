@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EmployeeTracker.Repositories.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeTracker.Repositories
 {
@@ -8,6 +9,15 @@ namespace EmployeeTracker.Repositories
             : base(options)
         {
 
+        }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Employee>().ToTable("employees");
         }
     }
 }

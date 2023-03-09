@@ -2,27 +2,30 @@
 using System;
 using EmployeeTracker.Configuration;
 using Microsoft.Extensions.Configuration;
+using EmployeeTracker.Services;
+using System.Threading.Tasks;
 
 namespace EmployeeTracker
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
 
-
             var services = new ServiceCollection();
 
-            services.AddServiceConfiguration(configuration);
+            var provider = services.AddServiceConfiguration(configuration)
+                .BuildServiceProvider();
 
-            var provider = services.BuildServiceProvider();
+            var employeeService = provider.GetRequiredService<IEmployeeService>();
 
+            await employeeService.ExecuteAsync(args);
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("The End");
         }
     }
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EmployeeTracker": {
+      "commandName": "Project",
+      "commandLineArgs": "get-employee --employeeId 2 --employeeName John --employeeSalary 333"
+    }
+  }
+}
