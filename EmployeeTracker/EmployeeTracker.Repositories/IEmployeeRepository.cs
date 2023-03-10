@@ -1,12 +1,13 @@
 ﻿using EmployeeTracker.Repositories.Entities;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EmployeeTracker.Repositories
 {
     public interface IEmployeeRepository
     {
-        Task<Employee> GetAsync(int id);
+        Task<List<Employee>> GetAsync(int id, DateTime date);
         Task AddAsync(int id, string name, int salary);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using EmployeeTracker.Repositories.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,23 +17,27 @@ namespace EmployeeTracker.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Employee> GetAsync(int id)
+        public async Task<List<Employee>> GetAsync(int id, DateTime date)
         {
-            var empployee = await _dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
+            var empployees = await _dbContext.Employees
+                .AsNoTracking()
+                .Where(e => e.EmployeeId == id && e.ExistenceStartUtc < date)
+                .OrderByDescending(e => e.ExistenceStartUtc)
+                .ToListAsync();
 
-            return empployee;
+            return empployees;
         }
 
         public async Task AddAsync(int id, string name, int salary)
         {
-            var currentRecords = await _dbContext.Employees.Where(e => e.EmployeeId == id && e.ExistenceEndUtc == null).ToListAsync();
+            var employee = await _dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id && !e.ExistenceEndUtc.HasValue);
 
-            foreach (var record in currentRecords)
+            if (employee != null)
             {
-                record.ExistenceEndUtc = DateTime.UtcNow;
+                employee.ExistenceEndUtc = DateTime.UtcNow;
             }
 
-            var emplyee = new Employee
+            var newEntry = new Employee
             {
                 EmployeeId = id,
                 EmployeeName = name,
@@ -39,7 +45,7 @@ namespace EmployeeTracker.Repositories
                 ExistenceStartUtc = DateTime.UtcNow,
             };
 
-            await _dbContext.Employees.AddAsync(emplyee);
+            _dbContext.Employees.Add(newEntry);
 
             await _dbContext.SaveChangesAsync();
         }

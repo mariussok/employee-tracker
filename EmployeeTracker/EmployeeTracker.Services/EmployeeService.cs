@@ -1,5 +1,4 @@
 ﻿using EmployeeTracker.Repositories;
-using EmployeeTracker.Repositories.Entities;
 using EmployeeTracker.Services.Models;
 using EmployeeTracker.Services.Parsers;
 using System;
@@ -23,12 +22,23 @@ namespace EmployeeTracker.Services
             switch (request.Type)
             {
                 case RequestType.SetEmployee:
+                    Console.WriteLine(request);
+
                     await _employeeRepository.AddAsync(request.Id, request.Name, request.Salary);
+
                     break;
                 case RequestType.GetEmployee:
-                    var employee = await _employeeRepository.GetAsync(request.Id);
+                    var date = request.SimulatedTimeUtc ?? DateTime.UtcNow;
 
-                    Console.WriteLine($"{employee.EmployeeId} {employee.EmployeeName} {employee.EmployeeSalary}");
+                    Console.WriteLine(request + " " + date);
+
+                    var employees = await _employeeRepository.GetAsync(request.Id, date);
+
+                    foreach (var employee in employees)
+                    {
+                        Console.WriteLine(employee);
+                    }
+
                     break;
                 default:
                     break;

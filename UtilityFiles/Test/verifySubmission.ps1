@@ -1,6 +1,6 @@
 
 # feel free to modify this line if your project structure is different to expected
-cd VismaChallenge/Employee
+cd ..\..\EmployeeTracker\EmployeeTracker
 
 $Env:connectionString="Server=localhost; User ID=postgres; Password=guest; Port=7777; Database=analyticsproject;"
 
@@ -20,4 +20,4 @@ dotnet run --no-build set-employee --employeeId 1 --employeeName John --employee
 dotnet run --no-build get-employee --employeeId 1 
 dotnet run --no-build get-employee --employeeId 1 --simulatedTimeUtc "$($past.ToString("yyyy-MM-ddTHH:mm:ssZ"))"
 
-cd ../..
+cd ../../UtilityFiles/Test

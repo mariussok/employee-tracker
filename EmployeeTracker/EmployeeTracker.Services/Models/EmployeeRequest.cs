@@ -9,5 +9,10 @@ namespace EmployeeTracker.Services.Models
         public string Name { get; set; }
         public int Salary { get; set; }
         public DateTime? SimulatedTimeUtc { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Type)}: {Type}; {nameof(Id)}: {Id}; {nameof(Name)}: {Name}; {nameof(Salary)}: {Salary};";
+        }
     }
 }

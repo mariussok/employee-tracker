@@ -5,6 +5,8 @@ namespace EmployeeTracker.Repositories.Entities
 {
     public class Employee
     {
+        [Column("id")]
+        public int Id { get; set; }
         [Column("employeeid")]
         public int EmployeeId { get; set; }
 
@@ -19,5 +21,10 @@ namespace EmployeeTracker.Repositories.Entities
 
         [Column("existenceendutc")]
         public DateTime? ExistenceEndUtc { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(EmployeeId)}: {EmployeeId}; {nameof(EmployeeName)}: {EmployeeName}; {nameof(EmployeeSalary)}: {EmployeeSalary}; {nameof(ExistenceStartUtc)}: {ExistenceStartUtc}; {nameof(ExistenceEndUtc)}: {ExistenceEndUtc}";
+        }
     }
 }

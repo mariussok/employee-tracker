@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using EmployeeTracker.Configuration;
-using Microsoft.Extensions.Configuration;
+﻿using EmployeeTracker.Configuration;
 using EmployeeTracker.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
 
 namespace EmployeeTracker
@@ -11,6 +11,8 @@ namespace EmployeeTracker
     {
         static async Task Main(string[] args)
         {
+            Console.WriteLine("Application Started");
+
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
@@ -25,7 +27,7 @@ namespace EmployeeTracker
 
             await employeeService.ExecuteAsync(args);
 
-            Console.WriteLine("The End");
+            Console.WriteLine("Application Stopped");
         }
     }
 }

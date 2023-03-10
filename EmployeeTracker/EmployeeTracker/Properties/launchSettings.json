@@ -2,7 +2,7 @@
   "profiles": {
     "EmployeeTracker": {
       "commandName": "Project",
-      "commandLineArgs": "get-employee --employeeId 2 --employeeName John --employeeSalary 333"
+      "commandLineArgs": "set-employee --employeeId 1 --employeeName John --employeeSalary 555"
     }
   }
 }
